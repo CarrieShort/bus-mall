@@ -1,11 +1,13 @@
 /* place holder to be replaced by array of objects */
-objectArray = ['baby','blue','bear','bees','berry','blaster'];
+objectArray = [];
 
 /* Constructor Function */
 function testObject (imgSrc, name){
   this.name = name;
   this.imgSrc = 'img/' + imgSrc + '.jpg'
   this.elementID = imgSrc;
+
+  this.updateObjectArray();
 }
 
 testObject.prototype.updateObjectArray = function () {
