@@ -1,71 +1,69 @@
 /* place holder to be replaced by array of objects */
-var objectArray = [];
-
+var productsArray = [];
 
 /* Constructor Function */
-function testObject (imgSrc,name,imgType){
+function busMallProduct (imgSrc,name,imgType){
   this.name = name;
   this.imgSrc = 'img/' + imgSrc + imgType;
   this.elementID = imgSrc;
   this.display = 0;
   this.clicked = 0;
-  objectArray.push(this);
+  productsArray.push(this);
 }
 
-
-testObject.prototype.render = function() {
+busMallProduct.prototype.render = function() {
   var imageDisplaySection = document.getElementById('imageDisplay');
-  var objectImg = document.createElement('img');
-  objectImg.src = this.imgSrc;
-  objectImg.id = this.elementID;
-  imageDisplaySection.appendChild(objectImg);
+  var productImg = document.createElement('img');
+  productImg.src = this.imgSrc;
+  productImg.id = this.elementID;
+  imageDisplaySection.appendChild(productImg);
   this.display++;
 }
 
-var bag = new testObject('bag','R2D2 Luggage','.jpg');
-var banana = new testObject('banana','Banana Slicer','.jpg');
-var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder','.jpg');
-var boots = new testObject('boots','Open Toed Rain Boots','.jpg');
-var breakfast = new testObject('breakfast','Breakfast Maker','.jpg');
-var bubblegum = new testObject('bubblegum','Meatball Bubblegum','.jpg');
-var chair = new testObject('chair','Uncomfortable Chair','.jpg');
-var cthulhu = new testObject('cthulhu','Cthulhu Action Figure','.jpg');
-var dogDuck = new testObject('dog-duck','Duckbill Muzzle','.jpg');
-var dragon = new testObject('dragon','Dragon Meet','.jpg');
-var pen = new testObject('pen','Pen Utensils','.jpg');
-var petSweep = new testObject('pet-sweep','Pet Sweeper Boots','.jpg');
-var scissors = new testObject('scissors','Pizza Scissors','.jpg');
-var shark = new testObject('shark','Shark Sleeping Bag','.jpg');
-var sweep = new testObject('sweep','Baby Sweeper','.png');
-var tauntaun = new testObject('tauntaun','Tauntaun Sleeping Bag','.jpg');
-var unicorn = new testObject('unicorn','Unicorn Meat','.jpg');
-var usb = new testObject('usb','Tentacle USB','.gif');
-var waterCan = new testObject('water-can','Infinite Loop Watering Can','.jpg');
-var wineGlass = new testObject('wine-glass','Guaranteed Spill Wine Glass','.jpg');
+var bag = new busMallProduct('bag','R2D2 Luggage','.jpg');
+var banana = new busMallProduct('banana','Banana Slicer','.jpg');
+var bathroom = new busMallProduct('bathroom','iPad/Toilet Paper Holder','.jpg');
+var boots = new busMallProduct('boots','Open Toed Rain Boots','.jpg');
+var breakfast = new busMallProduct('breakfast','Breakfast Maker','.jpg');
+var bubblegum = new busMallProduct('bubblegum','Meatball Bubblegum','.jpg');
+var chair = new busMallProduct('chair','Uncomfortable Chair','.jpg');
+var cthulhu = new busMallProduct('cthulhu','Cthulhu Action Figure','.jpg');
+var dogDuck = new busMallProduct('dog-duck','Duckbill Muzzle','.jpg');
+var dragon = new busMallProduct('dragon','Dragon Meet','.jpg');
+var pen = new busMallProduct('pen','Pen Utensils','.jpg');
+var petSweep = new busMallProduct('pet-sweep','Pet Sweeper Boots','.jpg');
+var scissors = new busMallProduct('scissors','Pizza Scissors','.jpg');
+var shark = new busMallProduct('shark','Shark Sleeping Bag','.jpg');
+var sweep = new busMallProduct('sweep','Baby Sweeper','.png');
+var tauntaun = new busMallProduct('tauntaun','Tauntaun Sleeping Bag','.jpg');
+var unicorn = new busMallProduct('unicorn','Unicorn Meat','.jpg');
+var usb = new busMallProduct('usb','Tentacle USB','.gif');
+var waterCan = new busMallProduct('water-can','Infinite Loop Watering Can','.jpg');
+var wineGlass = new busMallProduct('wine-glass','Guaranteed Spill Wine Glass','.jpg');
 
-function randomNum() {
-  return Math.floor((Math.random() * objectArray.length));
+function randomProductsArrayIndex() {
+  return Math.floor((Math.random() * productsArray.length));
 }
 
-function randomIndexArray() {
-  var ran1 = randomNum();
-  var ran2 = randomNum();
-  var ran3 = randomNum();
+function threeRandomProductIndexes() {
+  var ran1 = randomProductsArrayIndex();
+  var ran2 = randomProductsArrayIndex();
+  var ran3 = randomProductsArrayIndex();
   while (ran1 === ran2){
-    ran2 = randomNum();
+    ran2 = randomProductsArrayIndex();
   }
   while (ran1 === ran3 || ran2 === ran3){
-    ran3 = randomNum();
+    ran3 = randomProductsArrayIndex();
   }
   return [ran1,ran2,ran3];
 }
 
 // Function for adding content to page
-function generatePage(){
-  var randomIndex = randomIndexArray();
-  for (var i=0; i < randomIndex.length; i++) {
-    var index = randomIndex[i];
-    var object = objectArray[index];
+function renderThreeImages(){
+  var randomProductIndexArray = threeRandomProductIndexes();
+  for (var i=0; i < randomProductIndexArray.length; i++) {
+    var index = randomProductIndexArray[i];
+    var object = productsArray[index];
     object.render();
   }
 }
@@ -73,15 +71,15 @@ function generatePage(){
 function threeNewImages() {
   var imageDisplaySection = document.getElementById('imageDisplay');
   imageDisplaySection.textContent='';
-  generatePage();
+  renderThreeImages();
   imgEventListener();
 }
 
 function logClick() {
   var clickedID = this.id;
-  for(var i=0; i <objectArray.length;i++) {
-    if (clickedID === objectArray[i].elementID) {
-      objectArray[i].clicked++;
+  for(var i=0; i <productsArray.length;i++) {
+    if (clickedID === productsArray[i].elementID) {
+      productsArray[i].clicked++;
     }
   }
   threeNewImages();
@@ -94,5 +92,5 @@ function imgEventListener(){
   }
 }
 
-generatePage();
+renderThreeImages();
 imgEventListener();
