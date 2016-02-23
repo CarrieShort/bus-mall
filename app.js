@@ -2,9 +2,9 @@
 objectArray = [];
 
 /* Constructor Function */
-function testObject (imgSrc, name){
+function testObject (imgSrc,name,imgType){
   this.name = name;
-  this.imgSrc = 'img/' + imgSrc + '.jpg'
+  this.imgSrc = 'img/' + imgSrc + imgType;
   this.elementID = imgSrc;
 
   this.updateObjectArray();
@@ -43,10 +43,26 @@ function randomIndexArray() {
 }
 
 
-var bag = new testObject('bag','R2D2 Luggage');
+var bag = new testObject('bag','R2D2 Luggage','.jpg');
 var banana = new testObject('banana','Banana Slicer');
-var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder');
-var boots = new testObject('boots','Open Toed Rain Boots');
+var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder','.jpg');
+var boots = new testObject('boots','Open Toed Rain Boots','.jpg');
+var breakfast = new testObject('breakfast','Open Toed Rain Boots','.jpg');
+var bubblegum = new testObject('bubblegum','Open Toed Rain Boots','.jpg');
+var chair = new testObject('chair','Open Toed Rain Boots','.jpg');
+var cthulhu = new testObject('cthulhu','Open Toed Rain Boots','.jpg');
+var dogDuck = new testObject('dog-duck','Open Toed Rain Boots','.jpg');
+var dragon = new testObject('dragon','Open Toed Rain Boots','.jpg');
+var pen = new testObject('pen','Open Toed Rain Boots','.jpg');
+var petSweep = new testObject('pet-sweep','Open Toed Rain Boots','.jpg');
+var scissors = new testObject('scissors','Open Toed Rain Boots','.jpg');
+var shark = new testObject('shark','Open Toed Rain Boots','.jpg');
+var sweep = new testObject('sweep','Open Toed Rain Boots','.jpg');
+var tauntaun = new testObject('tauntaun','Open Toed Rain Boots','.jpg');
+var unicorn = new testObject('unicorn','Open Toed Rain Boots','.jpg');
+var usb = new testObject('usb','Open Toed Rain Boots','.gif');
+var waterCan = new testObject('water-can','Open Toed Rain Boots','.jpg');
+var wineGlass = new testObject('wine-glass','Open Toed Rain Boots','.jpg');
 
 var randomIndex = randomIndexArray();
 
