@@ -9,43 +9,18 @@ function testObject (imgSrc,name,imgType){
   this.elementID = imgSrc;
   this.display = 0;
   this.clicked = 0;
-
-  this.updateObjectArray();
+  objectArray.push(this);
 }
 
-testObject.prototype.updateObjectArray = function () {
-  objectArray.push(this);
-};
 
-testObject.prototype.appendObject = function() {
-  var oneEl = document.getElementById('imageDisplay');
+testObject.prototype.render = function() {
+  var imageDisplaySection = document.getElementById('imageDisplay');
   var objectImg = document.createElement('img');
   objectImg.src = this.imgSrc;
-  objectImg.setAttribute('id',this.elementID);
-  oneEl.appendChild(objectImg);
+  objectImg.id = this.elementID;
+  imageDisplaySection.appendChild(objectImg);
   this.display++;
 }
-
-
-function randomNum() {
-  var random = Math.floor((Math.random() * objectArray.length));
-  return random;
-}
-
-function randomIndexArray() {
-  var ran1 = randomNum();
-  var ran2 = randomNum();
-  var ran3 = randomNum();
-  while (ran1 === ran2){
-    ran2 = randomNum();
-  }
-  while (ran1 === ran3 || ran2 === ran3){
-    ran3 = randomNum();
-  }
-  var indexArray = [ran1,ran2,ran3];
-  return indexArray;
-}
-
 
 var bag = new testObject('bag','R2D2 Luggage','.jpg');
 var banana = new testObject('banana','Banana Slicer','.jpg');
@@ -68,36 +43,56 @@ var usb = new testObject('usb','Tentacle USB','.gif');
 var waterCan = new testObject('water-can','Infinite Loop Watering Can','.jpg');
 var wineGlass = new testObject('wine-glass','Guaranteed Spill Wine Glass','.jpg');
 
+function randomNum() {
+  return Math.floor((Math.random() * objectArray.length));
+}
+
+function randomIndexArray() {
+  var ran1 = randomNum();
+  var ran2 = randomNum();
+  var ran3 = randomNum();
+  while (ran1 === ran2){
+    ran2 = randomNum();
+  }
+  while (ran1 === ran3 || ran2 === ran3){
+    ran3 = randomNum();
+  }
+  return [ran1,ran2,ran3];
+}
 
 // Function for adding content to page
-
 function generatePage(){
   var randomIndex = randomIndexArray();
   for (var i=0; i < randomIndex.length; i++) {
     var index = randomIndex[i];
     var object = objectArray[index];
-    object.appendObject();
+    object.render();
   }
 }
-generatePage();
 
-function logClick(event) {
-  event.preventDefault();
+function threeNewImages() {
+  var imageDisplaySection = document.getElementById('imageDisplay');
+  imageDisplaySection.textContent='';
+  generatePage();
+  imgEventListener();
+}
+
+function logClick() {
   var clickedID = this.id;
   for(var i=0; i <objectArray.length;i++) {
     if (clickedID === objectArray[i].elementID) {
       objectArray[i].clicked++;
     }
   }
-  var oneEl = document.getElementById('imageDisplay');
-  oneEl.textContent='';
-  generatePage();
-  imgEventListener();
+  threeNewImages();
 }
+
 function imgEventListener(){
-  var image = document.getElementsByTagName('img');
-  for(var i = 0;i<image.length;i++){
-    image[i].addEventListener('click', logClick);
+  var displayedImages = document.getElementsByTagName('img');
+  for(var i = 0;i<displayedImages.length;i++){
+    displayedImages[i].addEventListener('click', logClick);
   }
 }
+
+generatePage();
 imgEventListener();
