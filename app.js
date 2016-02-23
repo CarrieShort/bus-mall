@@ -68,11 +68,11 @@ var usb = new testObject('usb','Open Toed Rain Boots','.gif');
 var waterCan = new testObject('water-can','Open Toed Rain Boots','.jpg');
 var wineGlass = new testObject('wine-glass','Open Toed Rain Boots','.jpg');
 
-var randomIndex = randomIndexArray();
 
 // Function for adding content to page
 
 function generatePage(){
+  var randomIndex = randomIndexArray();
   for (var i=0; i < randomIndex.length; i++) {
     var index = randomIndex[i];
     var object = objectArray[index];
@@ -92,10 +92,15 @@ function logClick(event) {
       objectArray[i].clicked++;
     }
   }
-
+  var oneEl = document.getElementById('imageDisplay');
+  oneEl.textContent='';
+  generatePage();
+  imgEventListener();
 }
-
-var image = document.getElementsByTagName('img');
-for(var i = 0;i<image.length;i++){
-  image[i].addEventListener('click', logClick);
+function imgEventListener(){
+  var image = document.getElementsByTagName('img');
+  for(var i = 0;i<image.length;i++){
+    image[i].addEventListener('click', logClick);
+  }
 }
+imgEventListener();
