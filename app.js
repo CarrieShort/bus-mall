@@ -8,6 +8,10 @@ function testObject (imgSrc, name){
   this.elementID = imgSrc;
 }
 
+testObject.prototype.updateObjectArray = function () {
+  objectArray.push(this);
+};
+
 function randomNum() {
   var random = Math.floor((Math.random() * objectArray.length));
   return random;
