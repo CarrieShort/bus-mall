@@ -43,6 +43,8 @@ randomIndexArray = function() {
 }
 
 var bag = new testObject('bag','R2D2 Luggage');
-
+var banana = new testObject('banana','Banana Slicer');
+var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder');
+var boots = new testObject('boots','Open Toed Rain Boots');
 
 // Function for adding content to page
