@@ -1,11 +1,13 @@
 /* place holder to be replaced by array of objects */
-objectArray = [];
+var objectArray = [];
+
 
 /* Constructor Function */
 function testObject (imgSrc,name,imgType){
   this.name = name;
   this.imgSrc = 'img/' + imgSrc + imgType;
   this.elementID = imgSrc;
+  this.Display = 0;
 
   this.updateObjectArray();
 }
@@ -20,6 +22,7 @@ testObject.prototype.appendObject = function() {
   objectImg.src = this.imgSrc;
   objectImg.setAttribute('id',this.elementID);
   oneEl.appendChild(objectImg);
+  this.Display++;
 }
 
 
@@ -44,7 +47,7 @@ function randomIndexArray() {
 
 
 var bag = new testObject('bag','R2D2 Luggage','.jpg');
-var banana = new testObject('banana','Banana Slicer');
+var banana = new testObject('banana','Banana Slicer','.jpg');
 var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder','.jpg');
 var boots = new testObject('boots','Open Toed Rain Boots','.jpg');
 var breakfast = new testObject('breakfast','Open Toed Rain Boots','.jpg');
@@ -57,7 +60,7 @@ var pen = new testObject('pen','Open Toed Rain Boots','.jpg');
 var petSweep = new testObject('pet-sweep','Open Toed Rain Boots','.jpg');
 var scissors = new testObject('scissors','Open Toed Rain Boots','.jpg');
 var shark = new testObject('shark','Open Toed Rain Boots','.jpg');
-var sweep = new testObject('sweep','Open Toed Rain Boots','.jpg');
+var sweep = new testObject('sweep','Open Toed Rain Boots','.png');
 var tauntaun = new testObject('tauntaun','Open Toed Rain Boots','.jpg');
 var unicorn = new testObject('unicorn','Open Toed Rain Boots','.jpg');
 var usb = new testObject('usb','Open Toed Rain Boots','.gif');
@@ -76,3 +79,5 @@ function generatePage(){
   }
 }
 generatePage();
+
+// go through array of objects and see which IDs were clicked.. if true log a click. Also whenever append object is fired update displayCount. Create Display Count. Every time generate page fires count.
