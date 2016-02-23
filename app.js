@@ -28,7 +28,7 @@ function randomNum() {
   return random;
 }
 
-randomIndexArray = function() {
+function randomIndexArray() {
   var ran1 = randomNum();
   var ran2 = randomNum();
   var ran3 = randomNum();
@@ -42,9 +42,21 @@ randomIndexArray = function() {
   return indexArray;
 }
 
+
 var bag = new testObject('bag','R2D2 Luggage');
 var banana = new testObject('banana','Banana Slicer');
 var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder');
 var boots = new testObject('boots','Open Toed Rain Boots');
 
+var randomIndex = randomIndexArray();
+
 // Function for adding content to page
+
+function generatePage(){
+  for (var i=0; i < randomIndex.length; i++) {
+    var index = randomIndex[i];
+    var object = objectArray[index];
+    object.appendObject();
+  }
+}
+generatePage();
