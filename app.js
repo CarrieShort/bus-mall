@@ -1,14 +1,19 @@
 /* place holder to be replaced by array of objects */
-stuff = ['baby','blue','bear','bees','berry','blaster'];
+objectArray = ['baby','blue','bear','bees','berry','blaster'];
 
-/* to be moved to method */
+/* Constructor Function */
+function testObject (imgSrc, name){
+  this.name = name;
+  this.imgSrc = 'img/' + imgSrc + '.jpg'
+  this.elementID = imgSrc;
+}
+
 function randomNum() {
-  var random = Math.floor((Math.random() * stuff.length));
+  var random = Math.floor((Math.random() * objectArray.length));
   return random;
 }
 
-/* to be moved to method */
-function randomIndexArray() {
+randomIndexArray = function() {
   var ran1 = randomNum();
   var ran2 = randomNum();
   var ran3 = randomNum();
@@ -21,3 +26,5 @@ function randomIndexArray() {
   var indexArray = [ran1,ran2,ran3];
   return indexArray;
 }
+
+var bag = new testObject('bag','R2D2 Luggage');
