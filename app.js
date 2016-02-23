@@ -7,7 +7,8 @@ function testObject (imgSrc,name,imgType){
   this.name = name;
   this.imgSrc = 'img/' + imgSrc + imgType;
   this.elementID = imgSrc;
-  this.Display = 0;
+  this.display = 0;
+  this.clicked = 0;
 
   this.updateObjectArray();
 }
@@ -22,7 +23,7 @@ testObject.prototype.appendObject = function() {
   objectImg.src = this.imgSrc;
   objectImg.setAttribute('id',this.elementID);
   oneEl.appendChild(objectImg);
-  this.Display++;
+  this.display++;
 }
 
 
@@ -81,3 +82,20 @@ function generatePage(){
 generatePage();
 
 // go through array of objects and see which IDs were clicked.. if true log a click. Also whenever append object is fired update displayCount. Create Display Count. Every time generate page fires count.
+
+//add event listener to every image
+function logClick(event) {
+  event.preventDefault();
+  var clickedID = this.id;
+  for(var i=0; i <objectArray.length;i++) {
+    if (clickedID === objectArray[i].elementID) {
+      objectArray[i].clicked++;
+    }
+  }
+
+}
+
+var image = document.getElementsByTagName('img');
+for(var i = 0;i<image.length;i++){
+  image[i].addEventListener('click', logClick);
+}
