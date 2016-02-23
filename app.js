@@ -12,6 +12,15 @@ testObject.prototype.updateObjectArray = function () {
   objectArray.push(this);
 };
 
+testObject.prototype.appendObject = function() {
+  var oneEl = document.getElementById('imageDisplay');
+  var objectImg = document.createElement('img');
+  objectImg.src = this.imgSrc;
+  objectImg.setAttribute('id',this.elementID);
+  oneEl.appendChild(objectImg);
+}
+
+
 function randomNum() {
   var random = Math.floor((Math.random() * objectArray.length));
   return random;
@@ -32,3 +41,6 @@ randomIndexArray = function() {
 }
 
 var bag = new testObject('bag','R2D2 Luggage');
+
+
+// Function for adding content to page
