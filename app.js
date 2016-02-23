@@ -51,22 +51,22 @@ var bag = new testObject('bag','R2D2 Luggage','.jpg');
 var banana = new testObject('banana','Banana Slicer','.jpg');
 var bathroom = new testObject('bathroom','iPad/Toilet Paper Holder','.jpg');
 var boots = new testObject('boots','Open Toed Rain Boots','.jpg');
-var breakfast = new testObject('breakfast','Open Toed Rain Boots','.jpg');
-var bubblegum = new testObject('bubblegum','Open Toed Rain Boots','.jpg');
-var chair = new testObject('chair','Open Toed Rain Boots','.jpg');
-var cthulhu = new testObject('cthulhu','Open Toed Rain Boots','.jpg');
-var dogDuck = new testObject('dog-duck','Open Toed Rain Boots','.jpg');
-var dragon = new testObject('dragon','Open Toed Rain Boots','.jpg');
-var pen = new testObject('pen','Open Toed Rain Boots','.jpg');
-var petSweep = new testObject('pet-sweep','Open Toed Rain Boots','.jpg');
-var scissors = new testObject('scissors','Open Toed Rain Boots','.jpg');
-var shark = new testObject('shark','Open Toed Rain Boots','.jpg');
-var sweep = new testObject('sweep','Open Toed Rain Boots','.png');
-var tauntaun = new testObject('tauntaun','Open Toed Rain Boots','.jpg');
-var unicorn = new testObject('unicorn','Open Toed Rain Boots','.jpg');
-var usb = new testObject('usb','Open Toed Rain Boots','.gif');
-var waterCan = new testObject('water-can','Open Toed Rain Boots','.jpg');
-var wineGlass = new testObject('wine-glass','Open Toed Rain Boots','.jpg');
+var breakfast = new testObject('breakfast','Breakfast Maker','.jpg');
+var bubblegum = new testObject('bubblegum','Meatball Bubblegum','.jpg');
+var chair = new testObject('chair','Uncomfortable Chair','.jpg');
+var cthulhu = new testObject('cthulhu','Cthulhu Action Figure','.jpg');
+var dogDuck = new testObject('dog-duck','Duckbill Muzzle','.jpg');
+var dragon = new testObject('dragon','Dragon Meet','.jpg');
+var pen = new testObject('pen','Pen Utensils','.jpg');
+var petSweep = new testObject('pet-sweep','Pet Sweeper Boots','.jpg');
+var scissors = new testObject('scissors','Pizza Scissors','.jpg');
+var shark = new testObject('shark','Shark Sleeping Bag','.jpg');
+var sweep = new testObject('sweep','Baby Sweeper','.png');
+var tauntaun = new testObject('tauntaun','Tauntaun Sleeping Bag','.jpg');
+var unicorn = new testObject('unicorn','Unicorn Meat','.jpg');
+var usb = new testObject('usb','Tentacle USB','.gif');
+var waterCan = new testObject('water-can','Infinite Loop Watering Can','.jpg');
+var wineGlass = new testObject('wine-glass','Guaranteed Spill Wine Glass','.jpg');
 
 
 // Function for adding content to page
@@ -81,9 +81,6 @@ function generatePage(){
 }
 generatePage();
 
-// go through array of objects and see which IDs were clicked.. if true log a click. Also whenever append object is fired update displayCount. Create Display Count. Every time generate page fires count.
-
-//add event listener to every image
 function logClick(event) {
   event.preventDefault();
   var clickedID = this.id;
