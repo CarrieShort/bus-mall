@@ -71,9 +71,7 @@ function renderThreeImages(){
     tallyRenders++;
   }
   else{
-    //provide a button
     document.getElementById('button').style.display = 'block';
-
   }
 }
 
@@ -91,8 +89,6 @@ function logClick() {
       productsArray[i].clicked++;
     }
   }
-  renderClicksChart();
-  renderCtrChart();
   threeNewImages();
 }
 
@@ -103,28 +99,30 @@ function imgEventListener(){
   }
 }
 
-renderThreeImages();
-imgEventListener();
-
 // chartjs
-function renderClicksChart() {
+function renderClickDisplayChart() {
   var productLabels = [];
   var productClicks = [];
+  var productDisplays = [];
   for(var i=0;i < productsArray.length;i++) {
     productLabels.push(productsArray[i].name);
-  }
-  for(var i=0;i < productsArray.length;i++) {
     productClicks.push(productsArray[i].clicked);
+    productDisplays.push(productsArray[i].display);
   }
 
   var clickData = {
     labels : productLabels,
     datasets : [
-      		{
-        			fillColor : 'rgba(73,188,170,0.4)',
-        			strokeColor : 'rgba(72,174,209,0.4)',
-        			data : productClicks
-      		}
+      {
+        		fillColor : 'rgba(73,188,170,0.4)',
+        		strokeColor : 'rgba(72,174,209,0.4)',
+        		data : productClicks
+      },
+      {
+        		fillColor : '#48A497',
+        		strokeColor : '#48A4D1',
+        		data : productDisplays
+      }
     ]
   }
   var clicks = document.getElementById('clicks').getContext('2d');
@@ -155,3 +153,14 @@ function renderCtrChart() {
   var ctr = document.getElementById('ctr').getContext('2d');
   new Chart(ctr).Bar(ctrData);
 }
+
+function showChartResults(){
+  this.style.display = 'none'
+  renderClickDisplayChart();
+  renderCtrChart();
+}
+
+renderThreeImages();
+imgEventListener();
+var resultButton = document.getElementById('button');
+resultButton.addEventListener('click',showChartResults);

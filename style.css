@@ -20,4 +20,7 @@ background: #5CD4CD;
 text-align: center;
 border-radius: 10px;
 font-family: arial;
-font-size: 40px;}
+font-size: 40px;
+cursor: pointer;}
+
+/*#clicks {width:100%;}*/
