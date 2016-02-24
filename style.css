@@ -1,3 +1,5 @@
+
+
 #imageDisplay {
   display: flex;
   flex-direction: row;
@@ -5,4 +7,27 @@
   align-items: flex-start;
 }
 
-img {width: 30%;}
+img {width: 30%;
+cursor: pointer;}
+
+#results {
+
+}
+.button {
+  margin: 0 auto;
+  width: 400px;
+  border: 2px solid #2E8F8B;
+  padding: 20px;
+  color: #fff;
+  background: #5CD4CD;
+  text-align: center;
+  border-radius: 10px;
+  font-family: arial;
+  font-size: 40px;
+  cursor: pointer;
+  display: none;
+}
+#clicks {margin:0 auto;
+display: block;
+width: 80%;}
+/*#clicks {width:100%;}*/

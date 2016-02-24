@@ -1,5 +1,6 @@
 /* place holder to be replaced by array of objects */
 var productsArray = [];
+var tallyRenders = 0;
 
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
@@ -60,11 +61,17 @@ function threeRandomProductIndexes() {
 
 // Function for adding content to page
 function renderThreeImages(){
-  var randomProductIndexArray = threeRandomProductIndexes();
-  for (var i=0; i < randomProductIndexArray.length; i++) {
-    var index = randomProductIndexArray[i];
-    var object = productsArray[index];
-    object.render();
+  if(tallyRenders < 4){
+    var randomProductIndexArray = threeRandomProductIndexes();
+    for (var i=0; i < randomProductIndexArray.length; i++) {
+      var index = randomProductIndexArray[i];
+      var object = productsArray[index];
+      object.render();
+    }
+    tallyRenders++;
+  }
+  else{
+    document.getElementById('results').style.display = 'block';
   }
 }
 
@@ -92,5 +99,93 @@ function imgEventListener(){
   }
 }
 
+// chartjs
+var clickDisplayChart = null;
+function renderClickDisplayChart() {
+  if(clickDisplayChart!=null){
+    clickDisplayChart.destroy();
+  }
+  var productLabels = [];
+  var productClicks = [];
+  var productDisplays = [];
+  for(var i=0;i < productsArray.length;i++) {
+    productLabels.push(productsArray[i].name);
+    productClicks.push(productsArray[i].clicked);
+    productDisplays.push(productsArray[i].display);
+  }
+
+  var clickData = {
+    labels : productLabels,
+    datasets : [
+      {
+        label: 'Clicks',
+        		fillColor : 'rgba(73,188,170,0.4)',
+        		strokeColor : 'rgba(72,174,209,0.4)',
+        		data : productClicks
+      },
+      {
+        label: 'Displays',
+        		fillColor : '#48A497',
+        		strokeColor : '#48A4D1',
+        		data : productDisplays,
+      }
+    ],
+  }
+  var clickDisplayCanvas = document.getElementById('clicks').getContext('2d');
+  clickDisplayChart = new Chart(clickDisplayCanvas).Bar(clickData,{
+    multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>'
+  });
+}
+
+function renderCtrChart() {
+  var productLabels = [];
+  var productCtr = [];
+  for(var i=0;i < productsArray.length;i++) {
+    productLabels.push(productsArray[i].name);
+  }
+  for(var i=0;i < productsArray.length;i++) {
+    productCtr.push((productsArray[i].clicked/productsArray[i].display));
+  }
+
+  var ctrData = {
+    labels : productLabels,
+    scaleLabel : '<%=value%>',
+    datasets : [
+      		{
+        			fillColor : 'rgba(73,188,170,0.4)',
+        			strokeColor : 'rgba(72,174,209,0.4)',
+        			data : productCtr
+      		}
+    ]
+  }
+  var ctr = document.getElementById('ctr').getContext('2d');
+  new Chart(ctr).Bar(ctrData);
+}
+
+function showChartResults(){
+  document.getElementById('clicks').style.visibility = 'visible';
+  this.style.display = 'none';
+  renderClickDisplayChart();
+  again.style.display = 'block';
+
+  // renderCtrChart();
+}
+function restartGame(){
+  this.style.display = 'none';
+  tallyRenders=0;
+  document.getElementById('clicks').style.visibility = 'hidden';
+  // clickDisplayChart.destroy();
+  // clickDisplayChart.clear();
+  // var clicks = document.getElementById('clicks');
+  // var context = clicks.getContext('2d');
+  // context.clearRect(0, 0, clicks.width, clicks.height);
+  threeNewImages();
+
+}
+
 renderThreeImages();
 imgEventListener();
+var resultButton = document.getElementById('results');
+var againButton = document.getElementById('again');
+resultButton.addEventListener('click',showChartResults);
+againButton.addEventListener('click',restartGame);
