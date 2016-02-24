@@ -2,11 +2,14 @@
 var productsArray = [];
 var tallyRenders = 0;
 var clickDisplayChart = null;
-var maxNumberOfImageSetsDisplayed = 10
+var maxNumberOfImageSetsDisplayed = 10;
 var imageDisplaySection = document.getElementById('imageDisplay');
 var resultButton = document.getElementById('results');
 var againButton = document.getElementById('again');
 var chartContainer = document.getElementById('chartContainer');
+var productLabels;
+var productClicks;
+var productDisplays;
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
   this.name = name;
@@ -23,7 +26,7 @@ busMallProduct.prototype.render = function() {
   productImg.id = this.elementID;
   imageDisplaySection.appendChild(productImg);
   this.display++;
-}
+};
 
 var bag = new busMallProduct('bag','R2D2 Luggage','.jpg');
 var banana = new busMallProduct('banana','Banana Slicer','.jpg');
@@ -102,20 +105,26 @@ function imgEventListener(){
   }
 }
 
-// chartjs
-function renderClickDisplayChart() {
-  if(clickDisplayChart!=null){
-    clickDisplayChart.destroy();
-  }
-  var productLabels = [];
-  var productClicks = [];
-  var productDisplays = [];
+function generateDataForChart() {
+  productLabels=[];
+  productClicks=[];
+  productDisplays=[];
   for(var i=0;i < productsArray.length;i++) {
     productLabels.push(productsArray[i].name);
     productClicks.push(productsArray[i].clicked);
     productDisplays.push(productsArray[i].display);
   }
+}
+function DestroyExistingChart(){
+  if(clickDisplayChart!=null){
+    clickDisplayChart.destroy();
+  }
+}
 
+// chartjs
+function renderClickDisplayChart() {
+  DestroyExistingChart();
+  generateDataForChart();
   var clickData = {
     labels : productLabels,
     datasets : [
@@ -132,10 +141,10 @@ function renderClickDisplayChart() {
         		data : productDisplays,
       }
     ],
-  }
+  };
   var clickDisplayCanvas = chartContainer.getContext('2d');
   clickDisplayChart = new Chart(clickDisplayCanvas).Bar(clickData,{
-    multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>'
+    multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>',
   });
 }
 
