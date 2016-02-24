@@ -1,5 +1,6 @@
 /* place holder to be replaced by array of objects */
 var productsArray = [];
+var tallyRenders = 0;
 
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
@@ -60,11 +61,17 @@ function threeRandomProductIndexes() {
 
 // Function for adding content to page
 function renderThreeImages(){
-  var randomProductIndexArray = threeRandomProductIndexes();
-  for (var i=0; i < randomProductIndexArray.length; i++) {
-    var index = randomProductIndexArray[i];
-    var object = productsArray[index];
-    object.render();
+  if(tallyRenders < 4){
+    var randomProductIndexArray = threeRandomProductIndexes();
+    for (var i=0; i < randomProductIndexArray.length; i++) {
+      var index = randomProductIndexArray[i];
+      var object = productsArray[index];
+      object.render();
+    }
+    tallyRenders++;
+  }
+  else{
+    //provide a button
   }
 }
 
@@ -82,6 +89,8 @@ function logClick() {
       productsArray[i].clicked++;
     }
   }
+  renderClicksChart();
+  renderCtrChart();
   threeNewImages();
 }
 
@@ -94,3 +103,53 @@ function imgEventListener(){
 
 renderThreeImages();
 imgEventListener();
+
+// chartjs
+function renderClicksChart() {
+  var productLabels = [];
+  var productClicks = [];
+  for(var i=0;i < productsArray.length;i++) {
+    productLabels.push(productsArray[i].name);
+  }
+  for(var i=0;i < productsArray.length;i++) {
+    productClicks.push(productsArray[i].clicked);
+  }
+
+  var clickData = {
+    labels : productLabels,
+    datasets : [
+      		{
+        			fillColor : 'rgba(73,188,170,0.4)',
+        			strokeColor : 'rgba(72,174,209,0.4)',
+        			data : productClicks
+      		}
+    ]
+  }
+  var clicks = document.getElementById('clicks').getContext('2d');
+  new Chart(clicks).Bar(clickData);
+}
+
+function renderCtrChart() {
+  var productLabels = [];
+  var productCtr = [];
+  for(var i=0;i < productsArray.length;i++) {
+    productLabels.push(productsArray[i].name);
+  }
+  for(var i=0;i < productsArray.length;i++) {
+    productCtr.push((productsArray[i].clicked/productsArray[i].display));
+  }
+
+  var ctrData = {
+    labels : productLabels,
+    scaleLabel : '<%=value%>',
+    datasets : [
+      		{
+        			fillColor : 'rgba(73,188,170,0.4)',
+        			strokeColor : 'rgba(72,174,209,0.4)',
+        			data : productCtr
+      		}
+    ]
+  }
+  var ctr = document.getElementById('ctr').getContext('2d');
+  new Chart(ctr).Bar(ctrData);
+}
