@@ -71,7 +71,7 @@ function renderThreeImages(){
     tallyRenders++;
   }
   else{
-    document.getElementById('button').style.display = 'block';
+    document.getElementById('results').style.display = 'block';
   }
 }
 
@@ -100,7 +100,11 @@ function imgEventListener(){
 }
 
 // chartjs
+var clickDisplayChart = null;
 function renderClickDisplayChart() {
+  if(clickDisplayChart!=null){
+    clickDisplayChart.destroy();
+  }
   var productLabels = [];
   var productClicks = [];
   var productDisplays = [];
@@ -127,8 +131,8 @@ function renderClickDisplayChart() {
       }
     ],
   }
-  var clicks = document.getElementById('clicks').getContext('2d');
-  new Chart(clicks).Bar(clickData,{
+  var clickDisplayCanvas = document.getElementById('clicks').getContext('2d');
+  clickDisplayChart = new Chart(clickDisplayCanvas).Bar(clickData,{
     multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>'
   });
 }
@@ -159,12 +163,29 @@ function renderCtrChart() {
 }
 
 function showChartResults(){
-  this.style.display = 'none'
+  document.getElementById('clicks').style.visibility = 'visible';
+  this.style.display = 'none';
   renderClickDisplayChart();
+  again.style.display = 'block';
+
   // renderCtrChart();
+}
+function restartGame(){
+  this.style.display = 'none';
+  tallyRenders=0;
+  document.getElementById('clicks').style.visibility = 'hidden';
+  // clickDisplayChart.destroy();
+  // clickDisplayChart.clear();
+  // var clicks = document.getElementById('clicks');
+  // var context = clicks.getContext('2d');
+  // context.clearRect(0, 0, clicks.width, clicks.height);
+  threeNewImages();
+
 }
 
 renderThreeImages();
 imgEventListener();
-var resultButton = document.getElementById('button');
+var resultButton = document.getElementById('results');
+var againButton = document.getElementById('again');
 resultButton.addEventListener('click',showChartResults);
+againButton.addEventListener('click',restartGame);
