@@ -72,6 +72,8 @@ function renderThreeImages(){
   }
   else{
     //provide a button
+    document.getElementById('button').style.display = 'block';
+
   }
 }
 

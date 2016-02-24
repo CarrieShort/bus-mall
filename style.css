@@ -1,3 +1,5 @@
+
+
 #imageDisplay {
   display: flex;
   flex-direction: row;
@@ -6,3 +8,16 @@
 }
 
 img {width: 30%;}
+
+#button {
+display: none;
+margin: 0 auto;
+width: 400px;
+border: 2px solid #2E8F8B;
+padding: 20px;
+color: #fff;
+background: #5CD4CD;
+text-align: center;
+border-radius: 10px;
+font-family: arial;
+font-size: 40px;}
