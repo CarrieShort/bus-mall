@@ -114,19 +114,23 @@ function renderClickDisplayChart() {
     labels : productLabels,
     datasets : [
       {
+        label: 'Clicks',
         		fillColor : 'rgba(73,188,170,0.4)',
         		strokeColor : 'rgba(72,174,209,0.4)',
         		data : productClicks
       },
       {
+        label: 'Displays',
         		fillColor : '#48A497',
         		strokeColor : '#48A4D1',
-        		data : productDisplays
+        		data : productDisplays,
       }
-    ]
+    ],
   }
   var clicks = document.getElementById('clicks').getContext('2d');
-  new Chart(clicks).Bar(clickData);
+  new Chart(clicks).Bar(clickData,{
+    multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>'
+  });
 }
 
 function renderCtrChart() {
@@ -157,7 +161,7 @@ function renderCtrChart() {
 function showChartResults(){
   this.style.display = 'none'
   renderClickDisplayChart();
-  renderCtrChart();
+  // renderCtrChart();
 }
 
 renderThreeImages();
