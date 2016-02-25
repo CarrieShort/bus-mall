@@ -175,12 +175,7 @@ function checkLocalStorageExistance(){
   if(window.localStorage.length !== 0) {
     storedProductData = localStorage.getItem('Product Interaction Data');
     productData = JSON.parse(storedProductData);
-    for (i=0; i < productData.length; i++) {
-      //update clicks and displays on page load from storage data
-      productsArray[i].display = productData[i].display;
-      productsArray[i].clicked = productData[i].clicked;
-    }
-
+    productsArray = productData;
   }
 }
 
