@@ -27,7 +27,7 @@ cursor: pointer;}
   cursor: pointer;
   display: none;
 }
-#clicks {margin:0 auto;
+#chartContainer {margin:0 auto;
 display: block;
 width: 80%;}
 /*#clicks {width:100%;}*/

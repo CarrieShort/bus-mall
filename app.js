@@ -2,9 +2,14 @@
 var productsArray = [];
 var tallyRenders = 0;
 var clickDisplayChart = null;
+var maxNumberOfImageSetsDisplayed = 10;
+var imageDisplaySection = document.getElementById('imageDisplay');
 var resultButton = document.getElementById('results');
 var againButton = document.getElementById('again');
-
+var chartContainer = document.getElementById('chartContainer');
+var productLabels;
+var productClicks;
+var productDisplays;
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
   this.name = name;
@@ -16,13 +21,12 @@ function busMallProduct (imgSrc,name,imgType){
 }
 
 busMallProduct.prototype.render = function() {
-  var imageDisplaySection = document.getElementById('imageDisplay');
   var productImg = document.createElement('img');
   productImg.src = this.imgSrc;
   productImg.id = this.elementID;
   imageDisplaySection.appendChild(productImg);
   this.display++;
-}
+};
 
 var bag = new busMallProduct('bag','R2D2 Luggage','.jpg');
 var banana = new busMallProduct('banana','Banana Slicer','.jpg');
@@ -64,7 +68,7 @@ function threeRandomProductIndexes() {
 
 // Function for adding content to page
 function renderThreeImages(){
-  if(tallyRenders < 25){
+  if(tallyRenders < maxNumberOfImageSetsDisplayed){
     var randomProductIndexArray = threeRandomProductIndexes();
     for (var i=0; i < randomProductIndexArray.length; i++) {
       var index = randomProductIndexArray[i];
@@ -74,12 +78,11 @@ function renderThreeImages(){
     tallyRenders++;
   }
   else{
-    document.getElementById('results').style.display = 'block';
+    resultButton.style.display = 'block';
   }
 }
 
 function threeNewImages() {
-  var imageDisplaySection = document.getElementById('imageDisplay');
   imageDisplaySection.textContent='';
   renderThreeImages();
   imgEventListener();
@@ -102,20 +105,26 @@ function imgEventListener(){
   }
 }
 
-// chartjs
-function renderClickDisplayChart() {
-  if(clickDisplayChart!=null){
-    clickDisplayChart.destroy();
-  }
-  var productLabels = [];
-  var productClicks = [];
-  var productDisplays = [];
+function generateDataForChart() {
+  productLabels=[];
+  productClicks=[];
+  productDisplays=[];
   for(var i=0;i < productsArray.length;i++) {
     productLabels.push(productsArray[i].name);
     productClicks.push(productsArray[i].clicked);
     productDisplays.push(productsArray[i].display);
   }
+}
+function DestroyExistingChart(){
+  if(clickDisplayChart!=null){
+    clickDisplayChart.destroy();
+  }
+}
 
+// chartjs
+function renderClickDisplayChart() {
+  DestroyExistingChart();
+  generateDataForChart();
   var clickData = {
     labels : productLabels,
     datasets : [
@@ -132,16 +141,16 @@ function renderClickDisplayChart() {
         		data : productDisplays,
       }
     ],
-  }
-  var clickDisplayCanvas = document.getElementById('clicks').getContext('2d');
+  };
+  var clickDisplayCanvas = chartContainer.getContext('2d');
   clickDisplayChart = new Chart(clickDisplayCanvas).Bar(clickData,{
-    multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>'
+    multiTooltipTemplate: '<%= datasetLabel %> - <%= value %>',
   });
 }
 
 // Buttons for User
 function showChartResults(){
-  document.getElementById('clicks').style.visibility = 'visible';
+  chartContainer.style.visibility = 'visible';
   this.style.display = 'none';
   renderClickDisplayChart();
   again.style.display = 'block';
@@ -150,9 +159,9 @@ function showChartResults(){
 function restartGame(){
   this.style.display = 'none';
   tallyRenders=0;
-  document.getElementById('clicks').style.visibility = 'hidden';
+  maxNumberOfImageSetsDisplayed=5;
+  chartContainer.style.visibility = 'hidden';
   threeNewImages();
-
 }
 
 renderThreeImages();
