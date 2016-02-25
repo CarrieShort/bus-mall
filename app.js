@@ -23,17 +23,6 @@ function busMallProduct (imgSrc,name,imgType){
   productsArray.push(this);
 }
 
-function render(randomProduct) {
-  var productImg = document.createElement('img');
-  productImg.src = randomProduct.imgSrc;
-  productImg.id = randomProduct.elementID;
-  imageDisplaySection.appendChild(productImg);
-  randomProduct.display++;
-  updateLocalStorage();
-};
-
-
-
 var bag = new busMallProduct('bag','R2D2 Luggage','.jpg');
 var banana = new busMallProduct('banana','Banana Slicer','.jpg');
 var bathroom = new busMallProduct('bathroom','iPad/Toilet Paper Holder','.jpg');
@@ -55,6 +44,14 @@ var usb = new busMallProduct('usb','Tentacle USB','.gif');
 var waterCan = new busMallProduct('water-can','Infinite Loop Watering Can','.jpg');
 var wineGlass = new busMallProduct('wine-glass','Guaranteed Spill Wine Glass','.jpg');
 
+function render(randomProduct) {
+  var productImg = document.createElement('img');
+  productImg.src = randomProduct.imgSrc;
+  productImg.id = randomProduct.elementID;
+  imageDisplaySection.appendChild(productImg);
+  randomProduct.display++;
+  updateLocalStorage();
+};
 
 function randomProductsArrayIndex() {
   return Math.floor((Math.random() * productsArray.length));
@@ -123,6 +120,7 @@ function generateDataForChart() {
     productDisplays.push(productsArray[i].display);
   }
 }
+
 function DestroyExistingChart(){
   if(clickDisplayChart!=null){
     clickDisplayChart.destroy();
