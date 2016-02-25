@@ -13,15 +13,6 @@ var productDisplays;
 var storedProductData;
 var productData;
 
-if(window.localStorage.length !== 0) {
-  storedProductData = localStorage.getItem('Product Interaction Data');
-  productData = JSON.parse(storedProductData);
-  console.log(productData);
-  // for (i=0; i < productData.length; i++) {
-  //
-  // }
-
-}
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
   this.name = name;
@@ -31,29 +22,14 @@ function busMallProduct (imgSrc,name,imgType){
   this.clicked = 0;
   productsArray.push(this);
 }
-// var myVeryCoolArray = ['blue','bear',12,56,'battlestar'];
-// var storedArray = JSON.stringify(myVeryCoolArray);
-// localStorage.setItem('keyName',storedArray);
-// localStorage.setItem('keyName2',storedArray);
-//
-// var retrieved = localStorage.getItem('keyName2');
-// var stuff = JSON.parse(retrieved);
 
-localStorage.clear();
-busMallProduct.prototype.render = function() {
+function render(randomProduct) {
   var productImg = document.createElement('img');
-  productImg.src = this.imgSrc;
-  productImg.id = this.elementID;
+  productImg.src = randomProduct.imgSrc;
+  productImg.id = randomProduct.elementID;
   imageDisplaySection.appendChild(productImg);
-  this.display++;
-
-  // var displayKey = this.name + ' displays';
-  // var currentClicks = localStorage.getItem(displayKey);
-  // var parsedCurrentClicks = JSON.parse(retrieved);
-  // localStorage.setItem(displayKey,storedArray);
-
-  //get current value of local.storage take value and add one, store new number
-
+  randomProduct.display++;
+  updateLocalStorage();
 };
 
 
@@ -79,6 +55,7 @@ var usb = new busMallProduct('usb','Tentacle USB','.gif');
 var waterCan = new busMallProduct('water-can','Infinite Loop Watering Can','.jpg');
 var wineGlass = new busMallProduct('wine-glass','Guaranteed Spill Wine Glass','.jpg');
 
+
 function randomProductsArrayIndex() {
   return Math.floor((Math.random() * productsArray.length));
 }
@@ -103,7 +80,7 @@ function renderThreeImages(){
     for (var i=0; i < randomProductIndexArray.length; i++) {
       var index = randomProductIndexArray[i];
       var object = productsArray[index];
-      object.render();
+      render(productsArray[index]);
     }
     tallyRenders++;
   }
@@ -123,6 +100,7 @@ function logClick() {
   for(var i=0; i <productsArray.length;i++) {
     if (clickedID === productsArray[i].elementID) {
       productsArray[i].clicked++;
+      updateLocalStorage();
     }
   }
   threeNewImages();
@@ -194,13 +172,30 @@ function restartGame(){
   threeNewImages();
 }
 
-renderThreeImages();
-imgEventListener();
+// Update and Retrieve Local Storage
+function checkLocalStorageExistance(){
+  if(window.localStorage.length !== 0) {
+    storedProductData = localStorage.getItem('Product Interaction Data');
+    productData = JSON.parse(storedProductData);
+    for (i=0; i < productData.length; i++) {
+      //update clicks and displays on page load from storage data
+      productsArray[i].display = productData[i].display;
+      productsArray[i].clicked = productData[i].clicked;
+    }
 
-resultButton.addEventListener('click',showChartResults);
-againButton.addEventListener('click',restartGame);
+  }
+}
 
 function updateLocalStorage (){
   storedProductData = JSON.stringify(productsArray);
   localStorage.setItem('Product Interaction Data',storedProductData);
 }
+
+// Call Functions on page load
+checkLocalStorageExistance();
+renderThreeImages();
+imgEventListener();
+
+// Add Event Handlers
+resultButton.addEventListener('click',showChartResults);
+againButton.addEventListener('click',restartGame);
