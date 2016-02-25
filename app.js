@@ -10,6 +10,18 @@ var chartContainer = document.getElementById('chartContainer');
 var productLabels;
 var productClicks;
 var productDisplays;
+var storedProductData;
+var productData;
+
+if(window.localStorage.length !== 0) {
+  storedProductData = localStorage.getItem('Product Interaction Data');
+  productData = JSON.parse(storedProductData);
+  console.log(productData);
+  // for (i=0; i < productData.length; i++) {
+  //
+  // }
+
+}
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
   this.name = name;
@@ -19,14 +31,32 @@ function busMallProduct (imgSrc,name,imgType){
   this.clicked = 0;
   productsArray.push(this);
 }
+// var myVeryCoolArray = ['blue','bear',12,56,'battlestar'];
+// var storedArray = JSON.stringify(myVeryCoolArray);
+// localStorage.setItem('keyName',storedArray);
+// localStorage.setItem('keyName2',storedArray);
+//
+// var retrieved = localStorage.getItem('keyName2');
+// var stuff = JSON.parse(retrieved);
 
+localStorage.clear();
 busMallProduct.prototype.render = function() {
   var productImg = document.createElement('img');
   productImg.src = this.imgSrc;
   productImg.id = this.elementID;
   imageDisplaySection.appendChild(productImg);
   this.display++;
+
+  // var displayKey = this.name + ' displays';
+  // var currentClicks = localStorage.getItem(displayKey);
+  // var parsedCurrentClicks = JSON.parse(retrieved);
+  // localStorage.setItem(displayKey,storedArray);
+
+  //get current value of local.storage take value and add one, store new number
+
 };
+
+
 
 var bag = new busMallProduct('bag','R2D2 Luggage','.jpg');
 var banana = new busMallProduct('banana','Banana Slicer','.jpg');
@@ -169,3 +199,8 @@ imgEventListener();
 
 resultButton.addEventListener('click',showChartResults);
 againButton.addEventListener('click',restartGame);
+
+function updateLocalStorage (){
+  storedProductData = JSON.stringify(productsArray);
+  localStorage.setItem('Product Interaction Data',storedProductData);
+}
