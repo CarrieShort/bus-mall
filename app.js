@@ -10,6 +10,9 @@ var chartContainer = document.getElementById('chartContainer');
 var productLabels;
 var productClicks;
 var productDisplays;
+var storedProductData;
+var productData;
+
 /* Constructor Function */
 function busMallProduct (imgSrc,name,imgType){
   this.name = name;
@@ -19,14 +22,6 @@ function busMallProduct (imgSrc,name,imgType){
   this.clicked = 0;
   productsArray.push(this);
 }
-
-busMallProduct.prototype.render = function() {
-  var productImg = document.createElement('img');
-  productImg.src = this.imgSrc;
-  productImg.id = this.elementID;
-  imageDisplaySection.appendChild(productImg);
-  this.display++;
-};
 
 var bag = new busMallProduct('bag','R2D2 Luggage','.jpg');
 var banana = new busMallProduct('banana','Banana Slicer','.jpg');
@@ -48,6 +43,15 @@ var unicorn = new busMallProduct('unicorn','Unicorn Meat','.jpg');
 var usb = new busMallProduct('usb','Tentacle USB','.gif');
 var waterCan = new busMallProduct('water-can','Infinite Loop Watering Can','.jpg');
 var wineGlass = new busMallProduct('wine-glass','Guaranteed Spill Wine Glass','.jpg');
+
+function render(randomProduct) {
+  var productImg = document.createElement('img');
+  productImg.src = randomProduct.imgSrc;
+  productImg.id = randomProduct.elementID;
+  imageDisplaySection.appendChild(productImg);
+  randomProduct.display++;
+  updateLocalStorage();
+};
 
 function randomProductsArrayIndex() {
   return Math.floor((Math.random() * productsArray.length));
@@ -73,7 +77,7 @@ function renderThreeImages(){
     for (var i=0; i < randomProductIndexArray.length; i++) {
       var index = randomProductIndexArray[i];
       var object = productsArray[index];
-      object.render();
+      render(productsArray[index]);
     }
     tallyRenders++;
   }
@@ -93,6 +97,7 @@ function logClick() {
   for(var i=0; i <productsArray.length;i++) {
     if (clickedID === productsArray[i].elementID) {
       productsArray[i].clicked++;
+      updateLocalStorage();
     }
   }
   threeNewImages();
@@ -115,6 +120,7 @@ function generateDataForChart() {
     productDisplays.push(productsArray[i].display);
   }
 }
+
 function DestroyExistingChart(){
   if(clickDisplayChart!=null){
     clickDisplayChart.destroy();
@@ -164,8 +170,30 @@ function restartGame(){
   threeNewImages();
 }
 
+// Update and Retrieve Local Storage
+function checkLocalStorageExistance(){
+  if(window.localStorage.length !== 0) {
+    storedProductData = localStorage.getItem('Product Interaction Data');
+    productData = JSON.parse(storedProductData);
+    for (i=0; i < productData.length; i++) {
+      //update clicks and displays on page load from storage data
+      productsArray[i].display = productData[i].display;
+      productsArray[i].clicked = productData[i].clicked;
+    }
+
+  }
+}
+
+function updateLocalStorage (){
+  storedProductData = JSON.stringify(productsArray);
+  localStorage.setItem('Product Interaction Data',storedProductData);
+}
+
+// Call Functions on page load
+checkLocalStorageExistance();
 renderThreeImages();
 imgEventListener();
 
+// Add Event Handlers
 resultButton.addEventListener('click',showChartResults);
 againButton.addEventListener('click',restartGame);
