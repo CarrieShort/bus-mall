@@ -7,8 +7,9 @@
   align-items: flex-start;
 }
 
-img {width: 30%;
-cursor: pointer;}
+img {height:250px;
+cursor: pointer;
+max-width: 30%;}
 
 #results {
 
