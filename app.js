@@ -10,6 +10,7 @@ var chartContainer = document.getElementById('chartContainer');
 var productLabels;
 var productClicks;
 var productDisplays;
+var productCtr;
 var storedProductData;
 var productData;
 
@@ -114,10 +115,12 @@ function generateDataForChart() {
   productLabels=[];
   productClicks=[];
   productDisplays=[];
+  productCtr=[];
   for(var i=0;i < productsArray.length;i++) {
     productLabels.push(productsArray[i].name);
     productClicks.push(productsArray[i].clicked);
     productDisplays.push(productsArray[i].display);
+    productCtr.push((productsArray[i].clicked/productsArray[i].display).toFixed(2));
   }
 }
 
@@ -145,6 +148,12 @@ function renderClickDisplayChart() {
         		fillColor : '#48A497',
         		strokeColor : '#48A4D1',
         		data : productDisplays,
+      },
+      {
+        label: 'CTR',
+        		fillColor : '#0A7375',
+        		strokeColor : '#064E4F',
+        		data : productCtr,
       }
     ],
   };
